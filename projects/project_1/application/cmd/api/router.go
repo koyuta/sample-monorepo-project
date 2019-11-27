@@ -3,11 +3,11 @@ package main
 import (
 	"net/http"
 
-	"project_name/application/controller"
-	"project_name/application/interface/handler"
-	v1 "project_name/application/interface/handler/v1"
-	"project_name/application/interface/middleware"
-	"project_name/application/pkg/router"
+	"application/controller"
+	"application/interface/handler"
+	v1 "application/interface/handler/v1"
+	"application/interface/middleware"
+	"application/pkg/router"
 
 	"github.com/go-chi/chi"
 	"github.com/urfave/negroni"

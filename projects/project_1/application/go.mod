@@ -1,4 +1,4 @@
-module project_name/application
+module application
 
 go 1.13
 

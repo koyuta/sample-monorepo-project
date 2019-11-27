@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"project_name/application/controller"
-	"project_name/application/interface/handler"
+	"application/controller"
+	"application/interface/handler"
 )
 
 // Hello is the api resource for `hello`.
