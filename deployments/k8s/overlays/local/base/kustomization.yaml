@@ -1,0 +1,11 @@
+namespace: project-1
+
+bases:
+  - ../../../base
+
+resources:
+  - ingress/ingress.yaml
+
+patchesStrategicMerge:
+  - ./api/deployment.yaml
+  - ./api/horizontal_pod_autoscaler.yaml

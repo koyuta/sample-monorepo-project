@@ -1,0 +1,7 @@
+namespace: project-1
+
+resources:
+  - namespace.yaml
+  - api/deployment.yaml
+  - api/service.yaml
+  - api/horizontal_pod_autoscaler.yaml
