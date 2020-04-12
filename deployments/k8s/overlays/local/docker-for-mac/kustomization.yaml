@@ -1,5 +1,0 @@
-namespace: project-1
-
-bases:
-  - https://github.com/kubernetes/ingress-nginx.git/deploy/cloud-generic
-  - ../base

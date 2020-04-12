@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  selector:
+    matchLabels:
+      app: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: sample/api:latest
+          ports:
+            - containerPort: 8000
+          args:
+            - --port=8000
+            - --db-user=$(DB_USER)
+            - --db-password=$(DB_PASSWORD)
+            - --db-host=$(DB_HOST)
+            - --db-name=$(DB_NAME)
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: host
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database
+                  key: user
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: database
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: name
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 12
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 2
+            failureThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 12
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+        - name: reverse-proxy
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx
+              readOnly: true
+              name: nginx-conf
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 12
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 2
+            failureThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 12
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: api
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+              - key: application.conf
+                path: conf.d/application.conf

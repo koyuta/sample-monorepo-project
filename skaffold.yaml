@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2alpha1
+kind: Config
+metadata:
+  name: sample-monorepo-project
+build:
+  artifacts:
+  - image: sample/api
+    context: ./servers
+    docker:
+      dockerfile: ./servers/Dockerfile
+      target: application
+  local:
+    useBuildkit: true
+    push: false
+profiles:
+  - name: dfm # Docker for Mac
+    deploy:
+      kustomize:
+        path: ./manifests/overlays/local/docker-for-mac
+  - name: minikube
+    deploy:
+      kustomize:
+        path: ./manifests/overlays/local/minikube

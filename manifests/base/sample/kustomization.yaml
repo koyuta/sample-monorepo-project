@@ -1,0 +1,11 @@
+namespace: sample
+
+resources:
+  - namespace.yaml
+  - api/config_map.yaml
+  - api/deployment.yaml
+  - api/horizontal_pod_autoscaler.yaml
+  - api/service.yaml
+  - database/config_map.yaml
+  - database/secret.yaml
+  - database/service.yaml

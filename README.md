@@ -1,19 +1,29 @@
 # monorepo
 
-## Build container image
+### Docker for Mac
+
+Run applications:
 
 ```
-docker build \
-  -t project-1/api \
-  -f ./projects/project-1/application/Dockerfile \
-  ./projects/project-1/application
+$ skaffold dev -p dfm
 ```
 
-## Deploy to local
+### Minikube
 
-### Docker for mac
+Enable ingress-nginx controller:
 
 ```
-kubectl kustomize ./deployments/k8s/overlays/local/docker-for-mac
-kubectl apply -k ./deployments/k8s/overlays/local/docker-for-mac
+$ minikube addons enable ingress
+```
+
+If you want to see pod metricses, enable the metrics-server addon.
+
+```
+$ minikube addons enable metrics-server
+```
+
+Run applications:
+
+```
+$ skaffold dev -p minikube
 ```

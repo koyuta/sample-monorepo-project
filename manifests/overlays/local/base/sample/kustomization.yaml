@@ -1,0 +1,16 @@
+namespace: sample
+
+bases:
+  - ../../../../base/sample
+
+resources:
+  - database/deployment.yaml
+  - database/persistent_volume.yaml
+  - database/persistent_volume_claim.yaml
+
+patchesStrategicMerge:
+  - api/deployment.yaml
+  - api/horizontal_pod_autoscaler.yaml
+  - database/config_map.yaml
+  - database/secret.yaml
+  - database/service.yaml
