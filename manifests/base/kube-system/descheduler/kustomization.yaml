@@ -1,0 +1,4 @@
+resources:
+  - config_map.yaml
+  - cron_job.yaml
+  - rbac.yaml

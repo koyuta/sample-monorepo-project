@@ -1,3 +1,4 @@
 bases:
+  - kube-system
   - ingress-nginx
   - sample
