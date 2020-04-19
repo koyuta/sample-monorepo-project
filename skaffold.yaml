@@ -4,11 +4,15 @@ metadata:
   name: sample-monorepo-project
 build:
   artifacts:
-  - image: sample/api
-    context: ./servers
-    docker:
-      dockerfile: ./servers/Dockerfile
-      target: application
+    - image: sample/api
+      context: ./servers
+      docker:
+        dockerfile: ./servers/Dockerfile
+        target: application
+      sync:
+        manual:
+          - src: ./servers/bin/api
+            dest: /usr/local/bin/api
   local:
     useBuildkit: true
     push: false
